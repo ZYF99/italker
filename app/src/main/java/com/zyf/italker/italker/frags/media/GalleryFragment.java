@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
 import com.zyf.italker.common.widget.GalleryView;
 import com.zyf.italker.italker.R;
 import com.zyf.italker.italker.utils.UiTool;
@@ -31,7 +32,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        //先使用默认的
+        //返回一个我们复写的
         return new TransStausBottomSheetDialog(getContext());
 
     }
@@ -82,7 +83,10 @@ public class GalleryFragment extends BottomSheetDialogFragment
         void onSlectedImage(String path);
     }
 
-    private static class TransStausBottomSheetDialog extends BottomSheetDialog {
+    /**
+     * 为了解决顶部状态栏变黑而写的透明的一个Dialog
+     */
+    public static class TransStausBottomSheetDialog extends BottomSheetDialog {
 
         public TransStausBottomSheetDialog(@NonNull Context context) {
             super(context);
@@ -112,7 +116,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
             //计算dialog的高度并设置
             int dialogHeight = screenHeight - statusHeight;
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT
-                    ,dialogHeight<=0?ViewGroup.LayoutParams.MATCH_PARENT:dialogHeight);
+                    , dialogHeight <= 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
         }
     }
 }

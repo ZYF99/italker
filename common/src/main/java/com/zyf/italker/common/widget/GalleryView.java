@@ -184,8 +184,6 @@ public class GalleryView extends RecyclerView {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-/*            //权限申请，有权限才读取
-            PermissionUtils.verifyStoragePermissions(((Activity)getContext()));*/
             // 创建一个Loader
             if (id == LOADER_ID) {
                 // 如果是我们的ID则可以进行初始化

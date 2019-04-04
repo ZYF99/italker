@@ -7,30 +7,34 @@
     android:layout_height="match_parent"
     android:layout_margin="1dp"
     android:background="@color/white">
+
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name" />
+
     <View
         android:id="@+id/view_shade"
-        tools:visibility="visible"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_alpha_112" />
+        android:background="@color/black_alpha_112"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <CheckBox
         android:id="@+id/cb_select"
-        tools:visibility="visible"
-        android:visibility="gone"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="49dp"
+        android:layout_height="14dp"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/len_2"
         android:button="@drawable/sel_cb_circle"
         android:clickable="false"
         android:drawablePadding="0dp"
         android:enabled="false"
         android:padding="0dp"
-        android:layout_gravity="end"
-        android:layout_margin="@dimen/len_2"
-        app:buttonTint="@color/cb_gallery"/>
+        android:visibility="gone"
+        app:buttonTint="@color/cb_gallery"
+        tools:visibility="visible" />
 </com.zyf.italker.common.widget.SquareLayout>

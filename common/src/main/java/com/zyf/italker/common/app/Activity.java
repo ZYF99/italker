@@ -1,39 +1,24 @@
 package com.zyf.italker.common.app;
 
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
-import com.zyf.italker.common.app.utils.PermissionUtils;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.zyf.italker.common.widget.convention.PlaceHolderView;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 
 public abstract class Activity extends AppCompatActivity {
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+
+    protected PlaceHolderView mPlaceHolderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = getSharedPreferences("permission",MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        //查看是否获得过权限
-        if(sharedPreferences.getBoolean("file",false)){
-            //有权限则直接初始化界面
-            initWindows();
-        }else {
-            //无权限则申请权限
-            PermissionUtils.verifyStoragePermissions(this);
-        }
-
-
-
-
+        //初始化内部界面（需要权限）
+        initWindows();
     }
 
     //初始化内部内容
@@ -42,11 +27,20 @@ public abstract class Activity extends AppCompatActivity {
             //得到界面ID并设置到界面中
             int layId = getContentLayoutId();
             setContentView(layId);
+            initBefore();
             initWidget();
             initData();
         } else {
             finish();
         }
+    }
+
+
+    /**
+     * 初始化控件调用之前
+     */
+    protected void initBefore() {
+
     }
 
     /*初始化相关参数 参数bundle
@@ -98,27 +92,13 @@ public abstract class Activity extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1: {                                          //这个0是requestCode，上面requestPermissions有用到
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "正在进入", Toast.LENGTH_SHORT).show();
-                    editor.putBoolean("file",true);
-                    editor.commit();
-                    //初始化内部界面（需要权限）
-                    initWindows();
-                } else {
-                    Toast.makeText(this, "您拒绝了写文件权限，无法进去APP", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                return;
-            }
-        }
 
+    /**
+     * 设置占位布局
+     * @param  placeHolderView 实现了占位布局规范的View
+     * */
+    public void setmPlaceHolderView(PlaceHolderView placeHolderView){
+        this.mPlaceHolderView = placeHolderView;
     }
 
 }

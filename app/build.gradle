@@ -2,10 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 28
-    compileOptions {
-/*        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8*/
-    }
     defaultConfig {
         applicationId "com.zyf.italker.italker"
         minSdkVersion 19
@@ -13,7 +9,21 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //个推相关参数
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "tfRNn6k4sg8I1mx93wmXe",
+                GETUI_APP_KEY   : "rgFj1ZFUiB7W8h8twa4Gg6",
+                GETUI_APP_SECRET: "fi5qymKDfr7nhKbasehGlA",
+                PACKAGE_NAME    : applicationId
+        ]
+
+        ndk {
+            abiFilters "x86", "x86_64", "arm64-v8a", "armeabi-v7a", 'armeabi'
+        }
     }
+
+
 
     buildTypes {
         release {
@@ -32,26 +42,33 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    api project(':factory')
+
     api "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
     api "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
     api "com.android.support:design:$rootProject.ext.supportVersion"
+
     api "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
     api "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
+
     api "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
     api "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+
     api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+
     api "com.yalantis:ucrop:$rootProject.ext.ucropVersion"
     api "pub.devrel:easypermissions:$rootProject.ext.easyPMVersion"
 
-/*    compile "com.github.hotchemi:permissionsdispatcher:2.1.2"
-    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:2.1.2"*/
-
+    // 个推
+    api "com.getui:sdk:$rootProject.ext.getuiVersion"
     // 空气面板
     api "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
+
     api 'com.android.support.constraint:constraint-layout:1.1.3'
     api "com.android.support:support-v4:$rootProject.ext.supportVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
     testImplementation 'junit:junit:4.12'
-    implementation project(':common')
 }

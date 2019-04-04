@@ -1,4 +1,4 @@
-package com.zyf.italker.common.app.utils;
+package com.zyf.italker.utils;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
